@@ -11,52 +11,49 @@ class ApiConsole extends Component {
   render() {
     return (
       <Layout sectioned>
-        { this.renderForm() }
+        { this.renderWelcome() }
+        { this.renderCurrentOrders() }
         { this.renderResponse() }
       </Layout>
     )
   }
 
-  renderForm() {
-    const { dispatch, requestFields } = this.props;
+  renderWelcome() {
 
     return (
-      <div>
-        <Layout.Section>
-          <Stack>
-            <VerbPicker verb={requestFields.verb} />
-            <TextField
-              value={requestFields.path}
-              onChange={path => dispatch(updatePath(path))}
-            />
-            <Button primary onClick={() => dispatch(sendRequest(requestFields))}>
-              Send
-            </Button>
-          </Stack>
-        </Layout.Section>
 
-        {this.renderParams()}
+      <div>
+      <Card
+        title="Clackeys App Interative Example v1"
+        sectioned
+      >
+        <p>{"Play around below to see what's going on with your store!"}</p>
+      </Card>
       </div>
     )
   }
 
-  renderParams() {
-    const { dispatch, requestFields } = this.props;
+  renderCurrentOrders() {
+    const { dispatch, getCurrentOrders } = this.props;
 
-    if (requestFields.verb === 'GET') {
-      return null;
-    } else {
-      return (
+    return (
+
+      <div>
         <Layout.Section>
-          <TextField
-            label="Request Params"
-            value={requestFields.params}
-            onChange={params => dispatch(updateParams(params))}
-            multiline={12}
-          />
+        This request will show you <strong>all</strong> of the stores current orders.
+          <Stack>
+            <VerbPicker verb={getCurrentOrders.verb} />
+            <TextField
+              value={getCurrentOrders.path}
+              onChange={path => dispatch(updatePath(path))}
+            />
+            <Button primary onClick={() => dispatch(sendRequest(getCurrentOrders))}>
+              Send
+            </Button>
+          </Stack>
         </Layout.Section>
-      );
-    }
+      </div>
+    )
   }
 
   renderResponse() {
@@ -90,12 +87,14 @@ class ApiConsole extends Component {
 
 function mapStateToProps({
   requestFields,
+  getCurrentOrders,
   requestInProgress,
   requestError,
   responseBody,
 }) {
   return {
     requestFields,
+    getCurrentOrders,
     requestInProgress,
     requestError,
     responseBody,

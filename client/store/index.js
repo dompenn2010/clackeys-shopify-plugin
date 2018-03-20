@@ -15,8 +15,14 @@ const requestFields = {
   }, null, 2)
 };
 
+const getCurrentOrders = {
+  verb: 'GET',
+  path: '/orders.json',
+};
+
 const initState = {
   requestFields,
+  getCurrentOrders,
   requestInProgress: false,
   requestError: null,
   responseBody: '',
